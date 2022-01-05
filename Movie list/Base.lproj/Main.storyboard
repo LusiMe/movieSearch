@@ -3,6 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,7 +19,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tsg-0j-irb">
                                 <rect key="frame" x="0.0" y="111" width="375" height="556"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="background"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="movieCell" id="GQL-UZ-TaB" customClass="MovieTableViewCell" customModule="Movie_list" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
@@ -30,7 +31,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w08-rl-tWs">
                                                     <rect key="frame" x="167" y="11.5" width="41.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" name="label"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -39,6 +40,7 @@
                                                 <constraint firstItem="w08-rl-tWs" firstAttribute="centerY" secondItem="NSk-8Z-tfH" secondAttribute="centerY" id="m2o-eA-tbE"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="table"/>
                                         <connections>
                                             <outlet property="movieTitle" destination="w08-rl-tWs" id="bec-V4-bpf"/>
                                         </connections>
@@ -47,21 +49,27 @@
                             </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="3fv-bO-I8f">
                                 <rect key="frame" x="0.0" y="-7" width="375" height="56"/>
+                                <color key="backgroundColor" name="label"/>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <color key="barTintColor" name="table"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="G7g-3s-8hP">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="G7g-3s-8hP">
                                 <rect key="frame" x="10" y="63" width="355" height="32"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <segments>
                                     <segment title="Sort by name"/>
                                     <segment title="Sort by year"/>
                                 </segments>
+                                <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                                <color key="selectedSegmentTintColor" systemColor="systemGray2Color"/>
                                 <connections>
                                     <action selector="toSortBy:" destination="BYZ-38-t0r" eventType="valueChanged" id="GBK-2G-VP5"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="tsg-0j-irb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="18m-CX-Q4Y"/>
                             <constraint firstItem="3fv-bO-I8f" firstAttribute="leading" secondItem="tsg-0j-irb" secondAttribute="leading" id="4Ng-4y-JpV"/>
@@ -101,6 +109,7 @@
                                     <constraint firstAttribute="height" constant="130" id="leS-5E-tV6"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                <color key="textColor" name="label"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DzZ-o3-dtP">
@@ -108,7 +117,7 @@
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gMg-Ad-ocY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="background"/>
                         <constraints>
                             <constraint firstItem="KZE-Wa-czg" firstAttribute="top" secondItem="gMg-Ad-ocY" secondAttribute="top" constant="20" id="2wf-6P-Ob7"/>
                             <constraint firstItem="gMg-Ad-ocY" firstAttribute="trailing" secondItem="DzZ-o3-dtP" secondAttribute="trailing" constant="10" id="5oP-De-esH"/>
@@ -131,8 +140,23 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <namedColor name="background">
+            <color red="0.10196078431372549" green="0.10196078431372549" blue="0.10196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="label">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="table">
+            <color red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

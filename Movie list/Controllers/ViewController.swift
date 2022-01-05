@@ -67,6 +67,7 @@ extension ViewController:UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("did select at",indexPath.row)
+        tableView.deselectRow(at: indexPath, animated: true)
         let imdbID = movieList[indexPath.row].imdbID
         let path = movieList[indexPath.row].Poster
         Worker.sharedInstanse.getMovieDetails(imdbID: imdbID, path: path, onImageSuccess)
