@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var sort: UISegmentedControl!
+    @IBOutlet weak var errorLabel: UILabel!
     
     var movieList = [Search]()
     
@@ -23,9 +24,33 @@ class ViewController: UIViewController {
         Worker.sharedInstanse.getMovieList(onSuccess)
     }
     
-    func onSuccess(data: [Search]) {
-        self.movieList = data
-        self.tableView.reloadData()
+    func onSuccess(result: Result<ResponceModel, NetworkError>) {
+        DispatchQueue.main.async {
+            switch result {
+            case .success(let data):
+                self.errorLabel.isHidden = true
+                self.movieList = data.search
+                self.tableView.reloadData()
+            case .failure(let error):
+                self.errorLabel.isHidden = false
+                print("onSuccess error", error)
+                self.errorLabel.text = Worker.sharedInstanse.specifyError(error)
+                self.movieList = [Search]()
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func onSearchSuccess(result: Result<[Search], NetworkError>) {
+        DispatchQueue.main.async {
+            switch result {
+            case .success(let data):
+                self.movieList = data
+                self.tableView.reloadData()
+            case .failure(let error):
+                print("onSuccess error", error)
+            }
+        }
     }
     
     func onImageSuccess(data: (Data?, String?)) -> Void {
@@ -83,8 +108,10 @@ extension ViewController: UISearchBarDelegate {
         }
         let searchText = searchBar.text!
         Worker.sharedInstanse.searchMovie(searchText: searchText, onFullSuccess: onSuccess)
-        print(searchBar.text)
-        
+        print(searchText)
+        //hide keyboard
+        self.view.endEditing(true)
     }
     
 }
+

@@ -7,12 +7,6 @@
 
 import Foundation
 
-//struct ResponceModel: Codable {
-//    let Title: String
-//    let Released: String
-//    let Plot: String
-//}
-
 struct ResponceModel: Codable {
     let search: [Search]
     let results: String
@@ -36,6 +30,18 @@ struct MovieDetails: Codable {
     }
 }
 
-
-//let decoder = JSONDecoder()
-//let wrapper = try decoder.decode(ResponceModel.self, from: data )
+struct ResultDecoder<T> {
+    
+    private let transform: (Data) throws -> T
+    
+    init (_ transform: @escaping (Data) throws -> T) {
+        self.transform = transform
+    }
+    
+    func decode(_ result: DataResult) -> Result<T, NetworkError> {
+      result.flatMap { (data) -> Result<T, NetworkError> in
+            Result { try transform(data) }.mapError { NetworkError.decodingError($0) }
+        }
+        
+    }
+}

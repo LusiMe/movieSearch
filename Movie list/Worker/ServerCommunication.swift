@@ -12,23 +12,52 @@ class ServerCommunication {
     
     private let BASE_URL = "https://www.omdbapi.com/"
     private let API_KEY = "fcf51026"
+    private let defaultSearch = "batman"
+    
+    private let moviesDecoder = ResultDecoder<ResponceModel>({ (data) throws -> ResponceModel in
+        try JSONDecoder().decode(ResponceModel.self, from: data)
+    })
+    
+    private let searchDecoder = ResultDecoder<[Search]>({ (data) throws -> [Search] in
+        try Array(JSONDecoder().decode([String: Search].self, from: data).values)
+    })
     
     enum parameters {
         static let search = "s"
         static let title = "t"
         static let imdbID = "i"
-        
     }
     
-    public func fetchMovies(onSuccess: @escaping(ResponceModel) -> Void) {
-        call(path: BASE_URL, method: "GET", parameter: parameters.search, value: "batman", onSuccess: onSuccess)
+    enum methods {
+        static let get = "GET"
     }
-    public func moviesSearchRequest(search: String, onSuccess: @escaping(ResponceModel) -> Void) {
-        call(path: BASE_URL, method: "GET", parameter: parameters.search, value: search, onSuccess: onSuccess)
+    
+    private func requestBuilder(searchValue: String) -> URLRequest? {
+//        let session = URLSession.shared
+        var urlBuilder = URLComponents(string: BASE_URL)
+        urlBuilder?.queryItems = [
+        URLQueryItem(name: "apikey", value: API_KEY),
+            URLQueryItem(name: parameters.search, value: searchValue)]
+        
+        guard let url = urlBuilder?.url else { return nil } //return error
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = methods.get
+        return request
+    }
+    
+    public func fetchMovies(onSuccess: @escaping(Result<ResponceModel, NetworkError>) -> Void) {
+        // guard let request else { return Network error. can't build url
+        if let request = requestBuilder(searchValue: defaultSearch) {
+            call(request: request, completion: onSuccess) }
+    }
+    public func moviesSearchRequest(search: String, onSuccess: @escaping(Result<ResponceModel, NetworkError>) -> Void) {
+        if let request = requestBuilder(searchValue: search) {
+            call(request: request, completion: onSuccess) }
     }
     
     public func getMovieByID(imdbID: String, onSuccess: @escaping(MovieDetails) -> Void) {
-        
+        // rewrite to new request
         print("imdbID", imdbID)
         let session = URLSession.shared
         var urlBuilder = URLComponents(string: BASE_URL)
@@ -53,7 +82,7 @@ class ServerCommunication {
                 return
             }
             guard let mime = responce?.mimeType, mime == "application/json" else {
-                print("wrong mime type", responce?.mimeType)
+                print("wrong mime type", responce?.mimeType as Any)
                 return
             }
             if let data = data {
@@ -72,7 +101,7 @@ class ServerCommunication {
     private func handleClientError(_ error: Error) {
         print("cached error", error)
         //let component know of smth
-        //TODO: how to appropriatly handle error
+        //TODO: how to appropriatly handle error - send a callback to view and represent error to client
     }
     
     private func handleServerError(_ response: URLResponse) {
@@ -94,7 +123,7 @@ class ServerCommunication {
     
     
     
-    public func call(path: String, method: String, parameter: String, value: String, onSuccess: @escaping(ResponceModel) -> Void) {
+    public func callDeprecated(path: String, method: String, parameter: String, value: String, onSuccess: @escaping(ResponceModel) -> Void) {
         let session = URLSession.shared
         var urlBuilder = URLComponents(string: path)
         urlBuilder?.queryItems = [
@@ -133,4 +162,60 @@ class ServerCommunication {
             }})
         task.resume()
 }
+    
+    func call(request: URLRequest, completion: @escaping(Result<ResponceModel, NetworkError>) -> Void) {
+        URLSession.shared.dataTask(with: request) { result in
+            completion(self.moviesDecoder.decode(result))
+        }.resume()
+    }
+    
+    func callSearch(request: URLRequest, completion: @escaping(Result<[Search], NetworkError>) -> Void) {
+        URLSession.shared.dataTask(with: request) { result in
+            completion(self.searchDecoder.decode(result))
+        }.resume()
+    }
 }
+
+enum NetworkError: Error {
+    case transportError(Error)
+    case serverError(statusCode: Int)
+    case noData
+    case decodingError(Error)
+    case encodingError(Error)
+}
+
+extension NetworkError {
+    init?(data: Data?, response: URLResponse?, error: Error?) {
+        if let error = error {
+            self = .transportError(error)
+            return
+        }
+        
+        if let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode) {
+            self = .serverError(statusCode: response.statusCode)
+            return
+        }
+        
+        if data == nil {
+            self = .noData
+        }
+        return nil
+    }
+}
+
+typealias DataResult = Result<Data, NetworkError>
+
+extension URLSession {
+    func dataTask(with request: URLRequest, resultHandler:@escaping(DataResult) ->Void) -> URLSessionDataTask {
+        
+        return self.dataTask(with: request) { data, response, error in
+            if let networkError = NetworkError(data: data, response: response, error: error) {
+                resultHandler(.failure(networkError))
+                return
+            }
+            resultHandler(.success(data!))
+        }
+    }
+}
+
+

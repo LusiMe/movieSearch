@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "3CD742EA-37DE-43A6-B226-0CC16BD37D66"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E0930B6D-363D-4FDA-BF83-EF941B4B81D7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Movie list/Model/Model.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "decode(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E0930B6D-363D-4FDA-BF83-EF941B4B81D7 - a979d58b43800e7d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Movie_list.ResultDecoder.decode(Swift.Result&lt;Foundation.Data, Movie_list.NetworkError&gt;) -&gt; Swift.Result&lt;A, Movie_list.NetworkError&gt;"
+                  moduleName = "Movie list"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/markparfenov/Desktop/Developer/Movie%20list/Movie%20list/Model/Model.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
+                  offsetFromSymbolStart = "54">
+               </Location>
+               <Location
+                  uuid = "E0930B6D-363D-4FDA-BF83-EF941B4B81D7 - 8c33ebab6c3f8640"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Foundation.Data) -&gt; Swift.Result&lt;A, Movie_list.NetworkError&gt; in Movie_list.ResultDecoder.decode(Swift.Result&lt;Foundation.Data, Movie_list.NetworkError&gt;) -&gt; Swift.Result&lt;A, Movie_list.NetworkError&gt;"
+                  moduleName = "Movie list"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/markparfenov/Desktop/Developer/Movie%20list/Movie%20list/Model/Model.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "399">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7EFC92D8-AB3E-49A6-A60D-6E08B70FA47F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Movie list/Worker/ServerCommunication.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "searchDecoder"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BC1865CE-3478-4F27-BD34-D1043AF27406"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Movie list/Worker/ServerCommunication.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "callSearch(request:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

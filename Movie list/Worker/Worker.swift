@@ -10,12 +10,12 @@ import Foundation
 class Worker {
     public static let sharedInstanse = Worker()
     
-    public func getMovieList(_ onFullSuccess: @escaping([Search]) -> Void) {
-        ServerCommunication.sharedInstance.fetchMovies(onSuccess: onSuccess(onFullSuccess))
+    public func getMovieList(_ onFullSuccess: @escaping(Result<ResponceModel, NetworkError>) -> Void) {
+        ServerCommunication.sharedInstance.fetchMovies(onSuccess: onFullSuccess)
     }
     
-    public func searchMovie(searchText: String, onFullSuccess: @escaping([Search]) -> Void) {
-        ServerCommunication.sharedInstance.moviesSearchRequest(search: searchText, onSuccess: onSearchSuccess(onFullSuccess))
+    public func searchMovie(searchText: String, onFullSuccess: @escaping(Result<ResponceModel, NetworkError>) -> Void) {
+        ServerCommunication.sharedInstance.moviesSearchRequest(search: searchText, onSuccess:onFullSuccess)
     }
     
     public func getImage(path: String, _ onFullSuccess: @escaping(Data) -> Void) {
@@ -24,23 +24,34 @@ class Worker {
     }
     
   
-    private func onSuccess(_ onFullSuccess: @escaping([Search]) -> Void) -> (ResponceModel) -> Void {
-        func getData(data: ResponceModel) -> Void {
-            onFullSuccess(getTitles(data))
-        }
-        return getData
-    }
+//    private func onSuccess(_ onFullSuccess: @escaping (Result<[Search], NetworkError>) -> Void) -> Void {
+        
+//        func getData(data: (Result<[Search], NetworkError>)) -> Void {
+//            onFullSuccess(getTitles(result: data))
+//            onFullSuccess(data)
+//        }
+        
+//        return getData
+//    }
     
-    public func onSearchSuccess(_ onFullSuccess: @escaping([Search]) -> Void) -> (ResponceModel) -> Void {
-        func getData(data: ResponceModel) -> Void {
-            onFullSuccess(getTitles(data))
-        }
-        return getData
-    }
+//    public func onSearchSuccess(_ onFullSuccess: @escaping([Search]) -> Void) -> (Result<ResponceModel, NetworkError>) -> Void {
+//        func getData(data: Result<[Search], NetworkError>) -> Void {
+//            onFullSuccess(getTitles(result: data))
+//        }
+//        return getData
+//    }
     
-    private func getTitles(_ data: ResponceModel ) -> [Search] {
-        data.search
-    }
+//    private func getTitles(result: (Result<[Search], NetworkError>)) -> [Search] {
+//        switch result {
+//        case .success(let data) :
+//            return data
+//        case .failure(let error):
+//
+//            print("get titles error", error)
+//            return error
+//        }
+//
+//    }
 
     public func getMovieDetails(imdbID: String, path: String, _ onFullSuccess: @escaping((Data?, String?)) -> Void) {
         
@@ -69,5 +80,20 @@ class Worker {
     
     private func getDetails(_ data: MovieDetails ) -> String {
         data.plot
+    }
+    
+    public func specifyError(_ error: NetworkError) -> String {
+        switch error {
+        case .transportError(let error):
+            return error.localizedDescription
+        case .serverError(_):
+            return "\(error)"
+        case .decodingError(let error):
+            return" Decoding error: \(error.localizedDescription)"
+        case .encodingError(let error):
+            return "Encoding error: \(error)"
+        default:
+            return error.localizedDescription
+        }
     }
 }
