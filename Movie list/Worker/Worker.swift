@@ -1,9 +1,4 @@
-//
-//  Worker.swift
-//  Movie list
-//
-//  Created by Mark Parfenov on 27/12/2021.
-//
+
 
 import Foundation
 
@@ -53,7 +48,6 @@ class Worker {
                 onFullSuccess((data.0, data.1))
             }
         }
-        //TODO: rename variables and functions to represent functionality
         func getDesc(desc: MovieDetails) -> Void {
             let description = getDetails(desc)
             data.1 = description

@@ -1,9 +1,3 @@
-//
-//  ViewController.swift
-//  Movie list
-//
-//  Created by Mark Parfenov on 22/12/2021.
-//
 
 import UIKit
 
@@ -70,7 +64,6 @@ extension ViewController:UITableViewDelegate, UITableViewDataSource {
         let imdbID = movieList[indexPath.row].imdbID
         let path = movieList[indexPath.row].Poster
         Worker.sharedInstanse.getMovieDetails(imdbID: imdbID, path: path, onImageSuccess)
-//        Worker.sharedInstanse.getImage(path: path, onImageSuccess)
         
     }
 }

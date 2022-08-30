@@ -1,9 +1,3 @@
-//
-//  Helper.swift
-//  Movie list
-//
-//  Created by Mark Parfenov on 03/01/2022.
-//
 
 import Foundation
 import UIKit
@@ -20,6 +14,4 @@ extension UIImageView {
             }
         }
     }
-    
-    
 }
