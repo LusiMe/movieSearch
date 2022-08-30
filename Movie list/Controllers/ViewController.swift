@@ -75,7 +75,6 @@ class ViewController: UIViewController {
         default: break
         }
     }
-    
 }
 
 extension ViewController:UITableViewDelegate, UITableViewDataSource {

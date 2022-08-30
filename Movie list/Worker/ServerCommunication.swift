@@ -101,7 +101,6 @@ class ServerCommunication {
     private func handleClientError(_ error: Error) {
         print("cached error", error)
         //let component know of smth
-        //TODO: how to appropriatly handle error - send a callback to view and represent error to client
     }
     
     private func handleServerError(_ response: URLResponse) {
