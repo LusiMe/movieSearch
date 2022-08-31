@@ -1,9 +1,3 @@
-//
-//  DetailsTableViewController.swift
-//  Movie list
-//
-//  Created by Mark Parfenov on 28/12/2021.
-//
 
 import UIKit
 

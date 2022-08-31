@@ -1,9 +1,3 @@
-//
-//  ServerCommunicationStore.swift
-//  Movie list
-//
-//  Created by Mark Parfenov on 22/12/2021.
-//
 
 import Foundation
 
@@ -13,7 +7,6 @@ class ServerCommunication {
     private let BASE_URL = "https://www.omdbapi.com/"
     private let API_KEY = "fcf51026"
     
-    // make reusable
     public func fetchMovies(onSuccess: @escaping(ResponceModel) -> Void) {
         let session = URLSession.shared
         var urlBuilder = URLComponents(string: BASE_URL)
@@ -138,8 +131,6 @@ class ServerCommunication {
     }
     private func handleClientError(_ error: Error) {
         print("cached error", error)
-        //let component know of smth
-        //TODO: how to appropriatly handle error
     }
     
     private func handleServerError(_ response: URLResponse) {
